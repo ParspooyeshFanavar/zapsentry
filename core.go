@@ -122,7 +122,11 @@ func (c *core) Write(ent zapcore.Entry, fs []zapcore.Field) error {
 		var hint *sentry.EventHint
 
 		event := sentry.NewEvent()
-		event.Message = ent.Message
+		if c.cfg.MessageFunc != nil {
+			event.Message = c.cfg.MessageFunc(&ent)
+		} else {
+			event.Message = ent.Message
+		}
 		event.Timestamp = ent.Time
 		event.Level = sentrySeverity(ent.Level)
 		event.Extra = clone.fields

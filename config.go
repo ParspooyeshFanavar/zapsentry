@@ -49,4 +49,6 @@ type Configuration struct {
 	// FrameMatcher allows to ignore some frames of the stack trace.
 	// this is particularly useful when you want to ignore for instances frames from convenience wrappers
 	FrameMatcher FrameMatcher
+
+	MessageFunc func(*zapcore.Entry) string
 }
